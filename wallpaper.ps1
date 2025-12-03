@@ -1,3 +1,6 @@
+# ЗАДЕРЖКА
+Start-Sleep -Seconds 15
+
 # 1. Скачивание обоев
 $imageUrl = "https://github.com/Mafin111/MafinREP111/raw/refs/heads/main/photo.jpg"
 $imagePath = "C:\Users\Public\wallpaper.jpg"
@@ -28,3 +31,4 @@ try {
 } catch {
     Write-Host "Ошибка при установке обоев: $_"
 }
+
