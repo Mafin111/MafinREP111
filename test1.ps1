@@ -1,17 +1,11 @@
-# Определить директорию запуска скрипта
-if ($MyInvocation.MyCommand.Path) {
-    $scriptDir = Split-Path -Path $MyInvocation.MyCommand.Path -Parent
-} elseif ($PSScriptRoot) {
-    $scriptDir = $PSScriptRoot
+# Если ярлык передал свой путь — он будет в $args[0]
+if ($args.Count -gt 0 -and (Test-Path $args[0])) {
+    $shortcutPath = (Resolve-Path $args[0]).Path
 } else {
-    $scriptDir = (Get-Location).Path
+    $shortcutPath = "Ярлык не передал свой путь"
 }
 
-# Получить полный путь и вывести его
-$fullPath = (Resolve-Path -Path $scriptDir).Path
-Write-Host "Текущий путь:" -ForegroundColor Cyan
-Write-Host $fullPath -ForegroundColor Yellow
+Write-Host "Путь ярлыка:" -ForegroundColor Cyan
+Write-Host $shortcutPath -ForegroundColor Yellow
 
-# Остановиться и ждать нажатия Enter
-Write-Host ""
-Read-Host -Prompt "Нажмите Enter для продолжения"
+Read-Host -Prompt "Нажмите Enter для выхода"
