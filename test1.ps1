@@ -1,37 +1,17 @@
-# Определяем путь, где запущен скрипт
+# Определить директорию запуска скрипта
 if ($MyInvocation.MyCommand.Path) {
-    $scriptPath = $MyInvocation.MyCommand.Path
-    $scriptDir  = Split-Path -Path $scriptPath -Parent
+    $scriptDir = Split-Path -Path $MyInvocation.MyCommand.Path -Parent
 } elseif ($PSScriptRoot) {
-    $scriptDir  = $PSScriptRoot
-    $scriptPath = Join-Path $scriptDir (Split-Path -Leaf $MyInvocation.MyCommand.Path)
+    $scriptDir = $PSScriptRoot
 } else {
-    $scriptDir  = (Get-Location).Path
-    $scriptPath = $null
+    $scriptDir = (Get-Location).Path
 }
 
-# Если скрипт запущен из файла — сформировать путь для .txt с тем же именем,
-# иначе создать файл replaced_by_script.txt в текущей директории
-if ($scriptPath) {
-    $txtPath = [IO.Path]::ChangeExtension($scriptPath, '.txt')
-} else {
-    $txtPath = Join-Path $scriptDir 'replaced_by_script.txt'
-}
+# Получить полный путь и вывести его
+$fullPath = (Resolve-Path -Path $scriptDir).Path
+Write-Host "Текущий путь:" -ForegroundColor Cyan
+Write-Host $fullPath -ForegroundColor Yellow
 
-# Записать в .txt слово "привет"
-"привет" | Out-File -FilePath $txtPath -Encoding UTF8 -Force
-
-# Если у нас есть путь к самому .ps1 — попытаться удалить/заменить его после выхода
-if ($scriptPath) {
-    # Команда, которую запустит фоновый PowerShell: подождать 1 секунду, затем удалить файл скрипта
-    $delCommand = "Start-Sleep -Seconds 1; Remove-Item -LiteralPath '$scriptPath' -Force"
-
-    # Запустить фоновый PowerShell, который выполнит удаление после завершения текущего процесса
-    Start-Process -FilePath powershell -ArgumentList "-NoProfile","-WindowStyle","Hidden","-Command",$delCommand
-}
-
-# Сообщение и пауза (по желанию)
-Write-Host "Скрипт определил директорию:" -ForegroundColor Cyan
-Write-Host $scriptDir -ForegroundColor Yellow
+# Остановиться и ждать нажатия Enter
 Write-Host ""
-Read-Host -Prompt "Нажмите Enter, чтобы завершить"
+Read-Host -Prompt "Нажмите Enter для продолжения"
