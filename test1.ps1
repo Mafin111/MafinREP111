@@ -1,11 +1,7 @@
-# Если ярлык передал свой путь — он будет в $args[0]
-if ($args.Count -gt 0 -and (Test-Path $args[0])) {
-    $shortcutPath = (Resolve-Path $args[0]).Path
-} else {
-    $shortcutPath = "Ярлык не передал свой путь"
-}
+# Вывести текущий рабочий путь и сделать паузу
+$path = (Get-Location).Path
+Write-Host "Текущий путь:" -ForegroundColor Cyan
+Write-Host $path -ForegroundColor Yellow
 
-Write-Host "Путь ярлыка:" -ForegroundColor Cyan
-Write-Host $shortcutPath -ForegroundColor Yellow
-
+Write-Host ""
 Read-Host -Prompt "Нажмите Enter для выхода"
