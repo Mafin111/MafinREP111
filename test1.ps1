@@ -11,3 +11,7 @@ if ($PSScriptRoot) {
 $fullPath = (Resolve-Path -Path $scriptDir).Path
 Write-Host "Скрипт был запущен из директории:" -ForegroundColor Cyan
 Write-Host $fullPath -ForegroundColor Yellow
+
+# Пауза в конце — ждать нажатия Enter
+Write-Host ""
+Read-Host -Prompt "Нажмите Enter, чтобы закрыть"
